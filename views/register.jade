@@ -19,7 +19,7 @@ html
                         div(style='float:right; font-size: 85%; position: relative; top:-10px')
                             a#signinlink(href='#', onclick="$('#signupbox').hide(); $('#loginbox').show()") Sign In
                     .panel-body
-                        form#signupform.form-horizontal(role='form', method='post', action='/login')
+                        form#signupform.form-horizontal(role='form', method='post', action='/register')
                            console.log("sign up")
                             #signupalert.alert.alert-danger(style='display:none')
                                 p Error:
