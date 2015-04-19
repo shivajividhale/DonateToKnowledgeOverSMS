@@ -102,7 +102,7 @@ app.post('/register',function(req, res){
         }
         else {
             // using SendGrid's Node.js Library - https://github.com/sendgrid/sendgrid-nodejs
-            var sendgrid = require("sendgrid")(api_user, api_key);
+            var sendgrid = require("sendgrid")("shivajividhale", "battlehack2015");
             var email = new sendgrid.Email();
 
             email.addTo("shivajividhale@gmail.com");
