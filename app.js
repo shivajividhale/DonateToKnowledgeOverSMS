@@ -7,6 +7,7 @@ var app = express();
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
+var session = require('client-sessions');
 mongoose.connect('mongodb://localhost/newauth');
 
 var User = mongoose.model('User', new Schema({
@@ -17,7 +18,14 @@ var User = mongoose.model('User', new Schema({
     password: String
 }));
 
+app.engine('html', require('ejs').renderFile);
+//Middleware
 app.set('view engine','jade');
+app.use(session({
+    cookieName: 'session',
+    secret: 's1l2aesdkfmb2342jasfdahj23b4hv2j4q2v43',
+    duration: 30*60*1000
+}));
 //Connect to MongoDB
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -30,10 +38,49 @@ app.get('/register',function(req, res){
 });
 
 app.get('/dashboard',function(req,res){
-    res.render('dashboard.jade');
+   if(req.session && req.session.user){
+       User.findOne({email: req.session.user.email}, function(err, user){
+           if (!user){
+               req.session.reset();
+               req.redirect('/login');
+           }
+           else {
+               res.locals.user = user;
+               res.render('dashboard.jade')
+           }
+
+       })
+   }
+    else{
+       res.redirect('/login');
+   }
+//Session set when user Request our app via URL
+    //console.log(sess);
+
 })
 
-app.post('/login')
+app.post('/login',function(req,res){
+    console.log("Entered login post");
+    User.findOne({email: req.body.username}, function(err, user){
+        console.log("findOne callback");
+        if(!user){
+            console.log("No user");
+            res.render('signin.jade',{error: "Invalid username or password"});
+        }
+        else{
+            console.log("In else");
+            if(req.body.password === user.password){
+                console.log("Passwords match");
+                req.session.user = user;
+                res.redirect('/dashboard');
+            }
+            else {
+                console.log("Incorrect password");
+                res.render('signin.jade',{error: "Incorrect password"});
+            }
+        }
+    })
+});
 
 app.post('/register',function(req, res){
    console.log("Entered post register");
@@ -54,7 +101,7 @@ app.post('/register',function(req, res){
             res.render('register.jade',{error: error});
         }
         else {
-                res.redirect('/dashboard')
+                res.redirect('/login')
             }
     });
 });
