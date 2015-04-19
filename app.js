@@ -104,11 +104,11 @@ app.post('/register',function(req, res){
             // using SendGrid's Node.js Library - https://github.com/sendgrid/sendgrid-nodejs
             var sendgrid = require("sendgrid")("shivajividhale", "battlehack2015");
             var email = new sendgrid.Email();
-
-            email.addTo("shivajividhale@gmail.com");
+            var sendemail = req.body.email;
+            email.addTo(sendemail);
             email.setFrom("savidhal@ncsu.edu");
-            email.setSubject("Sending with SendGrid is Fun");
-            email.setHtml("and easy to do anywhere, even with Node.js");
+            email.setSubject("Knowledge is valuable");
+            email.setHtml("We are glad to have you on board");
 
             sendgrid.send(email);
             console.log("email sent");
