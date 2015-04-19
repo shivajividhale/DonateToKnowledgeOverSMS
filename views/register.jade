@@ -11,7 +11,7 @@ html
     body
         .container
             .jumbotron
-            h3 Knowledge over SMS
+                h3 Knowledge over SMS
             #signupbox.mainbox.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2(style='margin-top:50px')
                 .panel.panel-info
                     .panel-heading
@@ -19,7 +19,7 @@ html
                         div(style='float:right; font-size: 85%; position: relative; top:-10px')
                             a#signinlink(href='#', onclick="$('#signupbox').hide(); $('#loginbox').show()") Sign In
                     .panel-body
-                        form#signupform.form-horizontal(role='form', method='post', action='/register')
+                        form#signupform.form-horizontal(role='form', method='post', action='/login')
                            console.log("sign up")
                             #signupalert.alert.alert-danger(style='display:none')
                                 p Error:
