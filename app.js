@@ -111,7 +111,9 @@ app.post('/register',function(req, res){
             email.setHtml("and easy to do anywhere, even with Node.js");
 
             sendgrid.send(email);
-                res.redirect('/login')
+            console.log("email sent");
+            console.log("Added user");
+                res.redirect('/login');
             }
     });
 });
