@@ -19,5 +19,6 @@
     "express-session": "^1.7.6",
     "jade": "^1.7.0",
     "mongoose": "^4.0.1"
-  }
+  },
+  "engines" : { "node" : "0.10.33" }
 }
