@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 var session = require('client-sessions');
-mongoose.connect('mongodb://localhost/newauth');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/newauth');
 
 var User = mongoose.model('User', new Schema({
     id: ObjectId,
