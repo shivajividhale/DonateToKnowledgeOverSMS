@@ -101,6 +101,16 @@ app.post('/register',function(req, res){
             res.render('register.jade',{error: error});
         }
         else {
+            // using SendGrid's Node.js Library - https://github.com/sendgrid/sendgrid-nodejs
+            var sendgrid = require("sendgrid")(api_user, api_key);
+            var email = new sendgrid.Email();
+
+            email.addTo("shivajividhale@gmail.com");
+            email.setFrom("savidhal@ncsu.edu");
+            email.setSubject("Sending with SendGrid is Fun");
+            email.setHtml("and easy to do anywhere, even with Node.js");
+
+            sendgrid.send(email);
                 res.redirect('/login')
             }
     });
